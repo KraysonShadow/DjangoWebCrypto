@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.button-link {
+    display: inline-block;
+    padding: 4px 6px; /* уменьшение размера кнопок */
+    background-color: white;
+    color: black;
+    border: 1px solid #888888;
+    border-radius: 3px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px; /* уменьшение размера текста */
+    margin-right: 10px; /* небольшое расстояние между кнопками */
+}
+
+.button-link:hover {
+    background-color: #f0f0f0;
+    color: black;
+    text-decoration: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button, .button-link {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+</style>
+<h1>Регистрация</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    {% for f in form %}
+        <p>
+            <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label>
+            {{ f }}
+        </p>
+        <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+
+    <p>
+        <button type="submit">Регистрация</button>
+    </p>
+    <div class="button-group">
+    <a href="{% url 'users:login' %}" class="button-link">Войти в существующий аккаунт</a>
+    <a href="{% url 'home' %}" class="button-link">Вернуться на главную</a>
+    </div>
+</form>
+
+{% endblock %}
